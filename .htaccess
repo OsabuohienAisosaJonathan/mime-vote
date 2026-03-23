@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Reject attempts to access hidden files or directories
+RewriteCond %{SCRIPT_FILENAME} -d
+RewriteCond %{SCRIPT_FILENAME} -f
+RewriteRule "(^|/)\." - [F]
+
+# Route all requests to index.php unless the file/dir exists (like css/js/images)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
